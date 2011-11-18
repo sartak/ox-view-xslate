@@ -2,7 +2,7 @@ package OX::View::Xslate;
 use Moose;
 
 use MooseX::Types::Path::Class;
-use Template;
+use Text::Xslate;
 
 has 'template_root' => (
     is       => 'ro',
@@ -20,11 +20,11 @@ has 'template_config' => (
 
 has 'xslate' => (
     is      => 'ro',
-    isa     => 'Template',
+    isa     => 'Text::Xslate',
     lazy    => 1,
     default => sub {
         my $self = shift;
-        Template->new(
+        Text::Xslate->new(
             INCLUDE_PATH => $self->template_root,
             %{ $self->template_config }
         )
