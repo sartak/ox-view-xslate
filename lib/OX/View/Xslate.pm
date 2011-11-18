@@ -43,13 +43,14 @@ sub _build_template_params {
 
 sub render {
     my ($self, $r, $template, $params) = @_;
-    my $out = '';
-    $self->xslate->process(
-        $template,
-        $self->_build_template_params( $r, $params ),
-        \$out
-    ) || confess $self->xslate->error;
-    $out;
+
+    $params = {
+        $r->mapping,
+        %{ $params || {} },
+        r => $r,
+    };
+
+    return $self->xslate->render($template, $params);
 }
 
 sub template {
