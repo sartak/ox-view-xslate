@@ -18,7 +18,7 @@ has 'template_config' => (
     default => sub { +{} },
 );
 
-has 'tt' => (
+has 'xslate' => (
     is      => 'ro',
     isa     => 'Template',
     lazy    => 1,
@@ -44,11 +44,11 @@ sub _build_template_params {
 sub render {
     my ($self, $r, $template, $params) = @_;
     my $out = '';
-    $self->tt->process(
+    $self->xslate->process(
         $template,
         $self->_build_template_params( $r, $params ),
         \$out
-    ) || confess $self->tt->error;
+    ) || confess $self->xslate->error;
     $out;
 }
 

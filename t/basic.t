@@ -66,7 +66,7 @@ use Path::Class ();
 my $foo = Foo->new;
 my $view = $foo->view;
 isa_ok($view, 'OX::View::Xslate');
-isa_ok($view->tt, 'Template');
+isa_ok($view->xslate, 'Text::Xslate');
 
 test_psgi
     app => $foo->to_app,
