@@ -1,1 +1,1 @@
-<p>[% uri_for(template => 'foo.tx') %]</p>
+<p><: uri_for({template => 'foo.tx'}) :></p>

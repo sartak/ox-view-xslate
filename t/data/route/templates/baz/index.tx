@@ -1,1 +1,1 @@
-<b>Hello world: [% m.data %]</b>
+<b>Hello world: <: $m.data :></b>

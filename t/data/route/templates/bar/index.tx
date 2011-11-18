@@ -1,1 +1,1 @@
-<b>Hello world: [% my_thing %]</b>
+<b>Hello world: <: $my_thing :></b>
