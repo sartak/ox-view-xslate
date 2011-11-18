@@ -4,14 +4,14 @@ use Moose;
 use MooseX::Types::Path::Class;
 use Text::Xslate;
 
-has 'template_root' => (
+has template_root => (
     is        => 'ro',
     isa       => 'Path::Class::Dir',
     coerce    => 1,
     predicate => 'has_template_root',
 );
 
-has 'template_config' => (
+has template_config => (
     is      => 'ro',
     isa     => 'HashRef',
     lazy    => 1,
