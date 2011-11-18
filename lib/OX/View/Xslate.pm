@@ -18,6 +18,12 @@ has 'template_config' => (
     default => sub { +{} },
 );
 
+has functions => (
+    is      => 'ro',
+    isa     => 'HashRef[CodeRef]',
+    default => sub { +{} },
+);
+
 has 'xslate' => (
     is      => 'ro',
     isa     => 'Text::Xslate',
@@ -39,12 +45,13 @@ has 'xslate' => (
             _uri_for => sub {
                 my ($r, $spec) = @_;
                 return $r->uri_for($spec);
-            }
+            },
+            %{ $self->functions },
         };
 
         Text::Xslate->new(
             %args,
-            %{ $self->template_config }
+            %{ $self->template_config },
         )
     }
 );
