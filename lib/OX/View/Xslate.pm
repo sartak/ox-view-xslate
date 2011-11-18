@@ -5,10 +5,10 @@ use MooseX::Types::Path::Class;
 use Text::Xslate;
 
 has 'template_root' => (
-    is       => 'ro',
-    isa      => 'Path::Class::Dir',
-    coerce   => 1,
-    required => 1,
+    is        => 'ro',
+    isa       => 'Path::Class::Dir',
+    coerce    => 1,
+    predicate => 'has_template_root',
 );
 
 has 'template_config' => (
@@ -24,22 +24,30 @@ has 'xslate' => (
     lazy    => 1,
     default => sub {
         my $self = shift;
+        my %args;
+
+        $args{path} ||= [];
+        push @{ $args{path} }, $self->template_root->stringify
+            if $self->has_template_root;
+
+        push @{ $args{path} }, {
+            '_header.tx' => ": macro uri_for ->(\$x) { _uri_for(\$r, \$x) }\n"
+        };
+        $args{header} = ['_header.tx'];
+
+        $args{function} = {
+            _uri_for => sub {
+                my ($r, $spec) = @_;
+                return $r->uri_for($spec);
+            }
+        };
+
         Text::Xslate->new(
-            path => [ $self->template_root->stringify ],
+            %args,
             %{ $self->template_config }
         )
     }
 );
-
-sub _build_template_params {
-    my ($self, $r, $params) = @_;
-    return +{
-        base    => $r->script_name,
-        uri_for => sub { $r->uri_for(@_) },
-        m       => { $r->mapping },
-        %{ $params || {} }
-    }
-}
 
 sub render {
     my ($self, $r, $template, $params) = @_;

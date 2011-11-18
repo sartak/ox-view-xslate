@@ -1,1 +1,1 @@
-<p>[% uri_for('action' => action, 'controller' => controller) %]</p>
+<p><: uri_for({ 'action' => $action, 'controller' => $controller }) :></p>
