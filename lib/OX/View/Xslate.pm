@@ -25,7 +25,7 @@ has 'xslate' => (
     default => sub {
         my $self = shift;
         Text::Xslate->new(
-            INCLUDE_PATH => $self->template_root,
+            path => [ $self->template_root->stringify ],
             %{ $self->template_config }
         )
     }
