@@ -24,37 +24,39 @@ has functions => (
     default => sub { +{} },
 );
 
-has 'xslate' => (
+has xslate => (
     is      => 'ro',
     isa     => 'Text::Xslate',
     lazy    => 1,
-    default => sub {
-        my $self = shift;
-        my %args;
-
-        $args{path} ||= [];
-        push @{ $args{path} }, $self->template_root->stringify
-            if $self->has_template_root;
-
-        push @{ $args{path} }, {
-            '_header.tx' => ": macro uri_for ->(\$x) { _uri_for(\$r, \$x) }\n"
-        };
-        $args{header} = ['_header.tx'];
-
-        $args{function} = {
-            _uri_for => sub {
-                my ($r, $spec) = @_;
-                return $r->uri_for($spec);
-            },
-            %{ $self->functions },
-        };
-
-        Text::Xslate->new(
-            %args,
-            %{ $self->template_config },
-        )
-    }
+    default => sub { Text::Xslate->new(shift->_build_xslate_config) }
 );
+
+sub _build_xslate_config {
+    my $self = shift;
+    my %args;
+
+    $args{path} ||= [];
+    push @{ $args{path} }, $self->template_root->stringify
+        if $self->has_template_root;
+
+    push @{ $args{path} }, {
+        '_header.tx' => ": macro uri_for ->(\$x) { _uri_for(\$r, \$x) }\n"
+    };
+    $args{header} = ['_header.tx'];
+
+    $args{function} = {
+        _uri_for => sub {
+            my ($r, $spec) = @_;
+            return $r->uri_for($spec);
+        },
+        %{ $self->functions },
+    };
+
+    return {
+        %args,
+        %{ $self->template_config },
+    };
+}
 
 sub render {
     my ($self, $r, $template, $params) = @_;
