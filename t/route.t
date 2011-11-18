@@ -28,10 +28,10 @@ use Path::Class ();
 
     router as {
         route '/' => 'view.template', (
-            template => 'index.tt',
+            template => 'index.tx',
         );
         route '/foo' => 'view.template', (
-            template => 'foo.tt',
+            template => 'foo.tx',
         );
     };
 }
@@ -88,10 +88,10 @@ test_psgi
 
     router as {
         route '/' => 'view.template', (
-            template => 'index.tt',
+            template => 'index.tx',
         );
         route '/foo' => 'view.template', (
-            template => 'foo.tt',
+            template => 'foo.tx',
         );
     };
 }
@@ -128,7 +128,7 @@ test_psgi
         my $self = shift;
         my ($r) = @_;
 
-        $self->render($r, 'index.tt');
+        $self->render($r, 'index.tx');
     }
 }
 
@@ -158,7 +158,7 @@ test_psgi
 
     router as {
         route '/' => 'view.template', (
-            template => 'index.tt',
+            template => 'index.tx',
             data     => 'index',
         );
         route '/foo' => 'controller.index', (

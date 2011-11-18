@@ -24,7 +24,7 @@ use Path::Class ();
         my $self = shift;
         my ($r) = @_;
         (my $template = $AUTOLOAD) =~ s/.*:://;
-        $template .= '.tt';
+        $template .= '.tx';
         my %defaults = $r->mapping;
         $self->render($r, $template, \%defaults);
     }
