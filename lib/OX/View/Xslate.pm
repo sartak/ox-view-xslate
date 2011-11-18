@@ -53,8 +53,8 @@ sub render {
     my ($self, $r, $template, $params) = @_;
 
     $params = {
-        $r->mapping,
         %{ $params || {} },
+        m => { $r->mapping },
         r => $r,
     };
 
