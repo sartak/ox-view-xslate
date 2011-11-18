@@ -58,7 +58,7 @@ sub _build_xslate_config {
     };
 }
 
-sub render {
+sub _build_render_params {
     my ($self, $r, $template, $params) = @_;
 
     $params = {
@@ -67,7 +67,14 @@ sub render {
         r => $r,
     };
 
-    return $self->xslate->render($template, $params);
+    return $params;
+}
+
+sub render {
+    my $self = shift;
+    my ($r, $template, $params) = @_;
+
+    return $self->xslate->render($template, $self->_build_render_params(@_));
 }
 
 sub template {
