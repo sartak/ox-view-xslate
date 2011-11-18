@@ -11,6 +11,13 @@ has template_root => (
     predicate => 'has_template_root',
 );
 
+has cache_dir => (
+    is        => 'ro',
+    isa       => 'Path::Class::Dir',
+    coerce    => 1,
+    predicate => 'has_cache_dir',
+);
+
 has template_config => (
     is      => 'ro',
     isa     => 'HashRef',
@@ -34,6 +41,9 @@ has xslate => (
 sub _build_xslate_config {
     my $self = shift;
     my %args;
+
+    $args{cache_dir} = $self->cache_dir->stringify
+        if $self->has_cache_dir;
 
     $args{path} ||= [];
     push @{ $args{path} }, $self->template_root->stringify
