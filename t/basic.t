@@ -14,7 +14,7 @@ use Path::Class ();
 
     has view => (
         is       => 'ro',
-        isa      => 'OX::View::TT',
+        isa      => 'OX::View::Xslate',
         required => 1,
         handles  => ['render'],
     );
@@ -45,7 +45,7 @@ use Path::Class ();
 
     has view => (
         is           => 'ro',
-        isa          => 'OX::View::TT',
+        isa          => 'OX::View::Xslate',
         dependencies => ['template_root'],
     );
 
@@ -65,7 +65,7 @@ use Path::Class ();
 
 my $foo = Foo->new;
 my $view = $foo->view;
-isa_ok($view, 'OX::View::TT');
+isa_ok($view, 'OX::View::Xslate');
 isa_ok($view->tt, 'Template');
 
 test_psgi

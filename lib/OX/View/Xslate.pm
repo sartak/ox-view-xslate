@@ -1,4 +1,4 @@
-package OX::View::TT;
+package OX::View::Xslate;
 use Moose;
 
 use MooseX::Types::Path::Class;
@@ -73,11 +73,11 @@ __END__
 
 =head1 NAME
 
-OX::View::TT - A Moosey solution to this problem
+OX::View::Xslate - A Moosey solution to this problem
 
 =head1 SYNOPSIS
 
-  use OX::View::TT;
+  use OX::View::Xslate;
 
 =head1 DESCRIPTION
 

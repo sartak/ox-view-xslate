@@ -22,7 +22,7 @@ use Path::Class ();
 
     has view => (
         is           => 'ro',
-        isa          => 'OX::View::TT',
+        isa          => 'OX::View::Xslate',
         dependencies => ['template_root'],
     );
 
@@ -57,7 +57,7 @@ test_psgi
     package Bar::View;
     use Moose;
 
-    extends 'OX::View::TT';
+    extends 'OX::View::Xslate';
 
     around render => sub {
         my $orig = shift;
@@ -119,7 +119,7 @@ test_psgi
 
     has view => (
         is       => 'ro',
-        isa      => 'OX::View::TT',
+        isa      => 'OX::View::Xslate',
         required => 1,
         handles  => ['render'],
     );
@@ -146,7 +146,7 @@ test_psgi
 
     has view => (
         is           => 'ro',
-        isa          => 'OX::View::TT',
+        isa          => 'OX::View::Xslate',
         dependencies => ['template_root'],
     );
 
